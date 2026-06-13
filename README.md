@@ -15,7 +15,7 @@
 | **Written On** | June 09, 2026 |
 | **Song Page** | [Open Song Page](https://imabusayed.github.io/cicatrices-que-aun-duelen/) |
 | **License** | [View License](./LICENSE.md) |
-| **Get License** | [Official Music Licensing for Cicatrices que aún duelen](https://music.abusayed.com.bd/Licensing/?https://imabusayed.github.io/cicatrices-que-aun-duelen/) |
+| **Get License** | [Get License For Cicatrices que aún duelen](https://music.abusayed.com.bd/Licensing/?https://imabusayed.github.io/cicatrices-que-aun-duelen/) |
 | **Author** | Abu Sayed |
 | **Rights** | All Rights Reserved |
 
@@ -32,7 +32,10 @@
 
 ## 📝 Lyric Preview
 
-> [Excerpt will appear here after the final lyric is saved.]
+> Subproject commit 4513f89e6a53e43d8ab08e534c747580ef7e852e
+> Baby, sé que tienes cicatrices que aún duelen
+> Pero en mis brazos no hay sombras que te desvelen
+> Siente cómo nuestros cuerpos hoy se envuelven
 > ...
 
 [**View Full Lyrics**](./lyrics.txt) | [**View Metadata**](./manifest.json) | [**View Proofs**](./hashes.txt)
