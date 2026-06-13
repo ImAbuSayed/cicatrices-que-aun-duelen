@@ -1,0 +1,277 @@
+Title: Cicatrices que aún duelen
+Clean Hash: 49d39b923fa76100895ce86b6b33730f2b1ec0541274e3a5e9a86edd9c2b2635
+Raw Hash: 9f2c5d604968a83f1581881ddfc0286f05e97c65e57a201c8f18ca95826cdf5d
+Date: 2026-06-13T18:56:56.851047
+Version: 1
+----------------------------------------
+[RAW LYRICS]
+Subproject commit 4513f89e6a53e43d8ab08e534c747580ef7e852e
+[Hook]
+Baby, sé que tienes cicatrices que aún duelen
+Pero en mis brazos no hay sombras que te desvelen
+Siente cómo nuestros cuerpos hoy se envuelven
+En este fuego lento las penas se disuelven
+
+[Verse 1]
+Mami, bajaste con un flow de jefa, coronada
+Dejaste el pasado atrás, te veo empoderada
+En el VIP brillando, mi baby, deseada
+Yo te tengo en la mira, esta noche estás cazada
+
+[Pre-Chorus]
+El bajo retumba, la tensión se siente
+Acércate un poco, ponte de frente
+
+[Chorus]
+Bailando en lo oscuro, olvidando el pasado
+Tú y yo en la pista, quedamos conectados
+Tus cicatrices con mis besos se han curado
+Cuando en la noche terminamos enredados
+
+[Verse 2]
+Racineta a 180, cruzando por la ciudad
+Esa actitud salvaje es pura debilidad
+No quiero ser tu amigo, te hablo con la verdad
+Esta pasión de calle rompe la tranquilidad
+
+[Pre-Chorus 2]
+El pulso se acelera, el instinto no miente
+Acércate un poco, que la noche está caliente
+
+[Chorus]
+Bailando en lo oscuro, olvidando el pasado
+Tú y yo en la pista, quedamos conectados
+Tus cicatrices con mis besos se han curado
+Cuando en la noche terminamos enredados
+
+[Verse 3]
+Tus ojos me provocan, el aroma me castiga
+Quiero que esta madrugada seas más que una amiga
+No hay freno en este viaje, deja que te persiga
+Rompiendo las reglas, que la envidia nos maldiga
+
+[Pre-Chorus 3]
+El ritmo nos llama, la química es evidente
+Acércate un poco, devórame lentamente
+
+[Chorus]
+Bailando en lo oscuro, olvidando el pasado
+Tú y yo en la pista, quedamos conectados
+Tus cicatrices con mis besos se han curado
+Cuando en la noche terminamos enredados
+
+[Bridge]
+Girl, your body language is calling me through the night
+Every single move you make is glowing in the neon light
+I feel the tension rising when I hold your waist so tight
+Let me be your only one and make everything alright
+Saeed is here to give you love and take you on this ride
+I want you closer to me, baby, right here by my side
+
+[Final Chorus]
+Bailando en lo oscuro, olvidando el pasado
+Tú y yo en la pista, quedamos conectados
+Tus cicatrices con mis besos se han curado
+Cuando en la noche terminamos enredados
+import re
+import sys
+
+def validate_lyrics(filepath):
+    try:
+        with open(filepath, 'r') as f:
+            content = f.read()
+    except FileNotFoundError:
+        print(f"Error: File {filepath} not found.")
+        sys.exit(1)
+
+    errors = []
+
+    # Check for START and END markers (even though they are needed in the final response,
+    # let's check if the raw file matches the structure format)
+    
+    sections = {
+        "[Hook]": 4,
+        "[Verse 1]": 4,
+        "[Pre-Chorus]": 2,
+        "[Chorus]": 4,
+        "[Verse 2]": 4,
+        "[Pre-Chorus 2]": 2,
+        "[Chorus]": 4,
+        "[Verse 3]": 4,
+        "[Pre-Chorus 3]": 2,
+        "[Bridge]": 6,
+        "[Final Chorus]": 4
+    }
+
+    # Extract lines, ignoring empty lines
+    lines = [line.strip() for line in content.split('\n') if line.strip()]
+
+    current_section = None
+    section_lines = 0
+
+    # Ensure Bridge requirements
+    bridge_found = False
+    saeed_mentioned = False
+
+    for line in lines:
+        if line.startswith("[") and line.endswith("]"):
+            if current_section:
+                # Check previous section line count
+                expected_lines = sections.get(current_section, 0)
+                if current_section == "[Bridge]":
+                   expected_lines = 6
+                # Wait, there are two choruses with the same name, let's just use the count from dict for validation
+                # Note: Dictionary keys are unique, but the prompt says "[Chorus]" repeated.
+                if section_lines != expected_lines and current_section != "[Chorus]": # allow chorus to be 4 lines always
+                    if not (current_section == "[Chorus]" and section_lines == 4):
+                        errors.append(f"Section {current_section} has {section_lines} lines, expected {expected_lines}.")
+            
+            current_section = line
+            section_lines = 0
+            if current_section == "[Bridge]":
+                bridge_found = True
+        else:
+            section_lines += 1
+            if current_section == "[Bridge]":
+                if "saeed" in line.lower():
+                    saeed_mentioned = True
+
+    # Check last section
+    if current_section:
+        expected_lines = sections.get(current_section, 4)
+        if section_lines != expected_lines:
+            errors.append(f"Section {current_section} has {section_lines} lines, expected {expected_lines}.")
+
+    if not bridge_found:
+        errors.append("Bridge section not found.")
+    if bridge_found and not saeed_mentioned:
+        errors.append("Saeed is not mentioned in the bridge.")
+
+    if errors:
+        for error in errors:
+            print(error)
+        sys.exit(1)
+    else:
+        print("Validation passed!")
+        sys.exit(0)
+
+if __name__ == '__main__':
+    validate_lyrics(sys.argv[1])
+--------------------
+[CLEAN LYRICS]
+Subproject commit 4513f89e6a53e43d8ab08e534c747580ef7e852e
+Baby, sé que tienes cicatrices que aún duelen
+Pero en mis brazos no hay sombras que te desvelen
+Siente cómo nuestros cuerpos hoy se envuelven
+En este fuego lento las penas se disuelven
+Mami, bajaste con un flow de jefa, coronada
+Dejaste el pasado atrás, te veo empoderada
+En el VIP brillando, mi baby, deseada
+Yo te tengo en la mira, esta noche estás cazada
+El bajo retumba, la tensión se siente
+Acércate un poco, ponte de frente
+Bailando en lo oscuro, olvidando el pasado
+Tú y yo en la pista, quedamos conectados
+Tus cicatrices con mis besos se han curado
+Cuando en la noche terminamos enredados
+Racineta a 180, cruzando por la ciudad
+Esa actitud salvaje es pura debilidad
+No quiero ser tu amigo, te hablo con la verdad
+Esta pasión de calle rompe la tranquilidad
+El pulso se acelera, el instinto no miente
+Acércate un poco, que la noche está caliente
+Bailando en lo oscuro, olvidando el pasado
+Tú y yo en la pista, quedamos conectados
+Tus cicatrices con mis besos se han curado
+Cuando en la noche terminamos enredados
+Tus ojos me provocan, el aroma me castiga
+Quiero que esta madrugada seas más que una amiga
+No hay freno en este viaje, deja que te persiga
+Rompiendo las reglas, que la envidia nos maldiga
+El ritmo nos llama, la química es evidente
+Acércate un poco, devórame lentamente
+Bailando en lo oscuro, olvidando el pasado
+Tú y yo en la pista, quedamos conectados
+Tus cicatrices con mis besos se han curado
+Cuando en la noche terminamos enredados
+Girl, your body language is calling me through the night
+Every single move you make is glowing in the neon light
+I feel the tension rising when I hold your waist so tight
+Let me be your only one and make everything alright
+Sayed is here to give you love and take you on this ride
+I want you closer to me, baby, right here by my side
+Bailando en lo oscuro, olvidando el pasado
+Tú y yo en la pista, quedamos conectados
+Tus cicatrices con mis besos se han curado
+Cuando en la noche terminamos enredados
+import re
+import sys
+def validate_lyrics(filepath):
+try:
+with open(filepath, 'r') as f:
+content = f.read()
+except FileNotFoundError:
+print.. f"Error: File {filepath} not found."..
+sys.exit.. 1..
+errors =
+# Check for START and END markers (even though they are needed in the final response,
+# let's check if the raw file matches the structure format)
+sections = {
+"": 4,
+"": 4,
+"": 2,
+"": 4,
+"": 4,
+"": 2,
+"": 4,
+"": 4,
+"": 2,
+"": 6,
+"": 4
+}
+# Extract lines, ignoring empty lines
+lines =
+current_section = None
+section_lines = 0
+# Ensure Bridge requirements
+bridge_found = False
+sayed_mentioned = False
+for line in lines:
+if line.startswith(""):
+if current_section:
+# Check previous section line count
+expected_lines = sections.get.. current_section, 0..
+if current_section == "":
+expected_lines = 6
+# Wait, there are two choruses with the same name, let's just use the count from dict for validation
+# Note: Dictionary keys are unique, but the prompt says "" repeated.
+if section_lines != expected_lines and current_section != "": # allow chorus to be 4 lines always
+if not (current_section == "" and section_lines == 4):
+errors.append.. f"Section {current_section} has {section_lines} lines, expected {expected_lines}."..
+current_section = line
+section_lines = 0
+if current_section == "":
+bridge_found = True
+else:
+section_lines += 1
+if current_section == "":
+if "sayed" in line.lower():
+sayed_mentioned = True
+# Check last section
+if current_section:
+expected_lines = sections.get.. current_section, 4..
+if section_lines != expected_lines:
+errors.append.. f"Section {current_section} has {section_lines} lines, expected {expected_lines}."..
+if not bridge_found:
+errors.append.. "Bridge section not found."..
+if bridge_found and not sayed_mentioned:
+errors.append.. "Sayed is not mentioned in the bridge."..
+if errors:
+for error in errors:
+print.. error..
+sys.exit.. 1..
+else:
+print.. "Validation passed!"..
+sys.exit.. 0..
+if __name__ == '__main__':
+validate_lyrics.. sys.argv..

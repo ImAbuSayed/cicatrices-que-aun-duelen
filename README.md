@@ -15,7 +15,7 @@
 | **Written On** | June 09, 2026 |
 | **Song Page** | [Open Song Page](https://imabusayed.github.io/cicatrices-que-aun-duelen/) |
 | **License** | [View License](./LICENSE.md) |
-| **Get License** | [Get License For Cicatrices que aún duelen](https://music.abusayed.com.bd/Licensing/?https://imabusayed.github.io/cicatrices-que-aun-duelen/) |
+| **Get License** | [Request Licensing for Cicatrices que aún duelen](https://music.abusayed.com.bd/Licensing/?https://imabusayed.github.io/cicatrices-que-aun-duelen/) |
 | **Author** | Abu Sayed |
 | **Rights** | All Rights Reserved |
 
@@ -110,7 +110,7 @@ This song is an original creative work by Abu Sayed. All lyrics, melody, and com
 |:-------------------|:------------|
 | **Author** | Abu Sayed |
 | **Version** | `v1` |
-| **SHA-256 Hash** | `N/A` |
+| **SHA-256 Hash** | `49d39b923fa76100895ce86b6b33730f2b1ec0541274e3a5e9a86edd9c2b2635` |
 | **Timestamp** | June 13, 2026 |
 
 See [LICENSE.md](./LICENSE.md) for full terms and conditions.

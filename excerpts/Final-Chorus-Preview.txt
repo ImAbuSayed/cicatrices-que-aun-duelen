@@ -1,0 +1,88 @@
+Bailando en lo oscuro, olvidando el pasado
+Tú y yo en la pista, quedamos conectados
+Tus cicatrices con mis besos se han curado
+Cuando en la noche terminamos enredados
+import re
+import sys
+
+def validate_lyrics(filepath):
+    try:
+        with open(filepath, 'r') as f:
+            content = f.read()
+    except FileNotFoundError:
+        print(f"Error: File {filepath} not found.")
+        sys.exit(1)
+
+    errors = []
+
+    # Check for START and END markers (even though they are needed in the final response,
+    # let's check if the raw file matches the structure format)
+
+    sections = {
+        "[Hook]": 4,
+        "[Verse 1]": 4,
+        "[Pre-Chorus]": 2,
+        "[Chorus]": 4,
+        "[Verse 2]": 4,
+        "[Pre-Chorus 2]": 2,
+        "[Chorus]": 4,
+        "[Verse 3]": 4,
+        "[Pre-Chorus 3]": 2,
+        "[Bridge]": 6,
+        "[Final Chorus]": 4
+    }
+
+    # Extract lines, ignoring empty lines
+    lines = [line.strip() for line in content.split('\n') if line.strip()]
+
+    current_section = None
+    section_lines = 0
+
+    # Ensure Bridge requirements
+    bridge_found = False
+    saeed_mentioned = False
+
+    for line in lines:
+        if line.startswith("[") and line.endswith("]"):
+            if current_section:
+                # Check previous section line count
+                expected_lines = sections.get(current_section, 0)
+                if current_section == "[Bridge]":
+                   expected_lines = 6
+                # Wait, there are two choruses with the same name, let's just use the count from dict for validation
+                # Note: Dictionary keys are unique, but the prompt says "[Chorus]" repeated.
+                if section_lines != expected_lines and current_section != "[Chorus]": # allow chorus to be 4 lines always
+                    if not (current_section == "[Chorus]" and section_lines == 4):
+                        errors.append(f"Section {current_section} has {section_lines} lines, expected {expected_lines}.")
+
+            current_section = line
+            section_lines = 0
+            if current_section == "[Bridge]":
+                bridge_found = True
+        else:
+            section_lines += 1
+            if current_section == "[Bridge]":
+                if "saeed" in line.lower():
+                    saeed_mentioned = True
+
+    # Check last section
+    if current_section:
+        expected_lines = sections.get(current_section, 4)
+        if section_lines != expected_lines:
+            errors.append(f"Section {current_section} has {section_lines} lines, expected {expected_lines}.")
+
+    if not bridge_found:
+        errors.append("Bridge section not found.")
+    if bridge_found and not saeed_mentioned:
+        errors.append("Saeed is not mentioned in the bridge.")
+
+    if errors:
+        for error in errors:
+            print(error)
+        sys.exit(1)
+    else:
+        print("Validation passed!")
+        sys.exit(0)
+
+if __name__ == '__main__':
+    validate_lyrics(sys.argv[1])
